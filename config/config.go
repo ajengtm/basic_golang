@@ -12,8 +12,9 @@ import (
 // MainConfig : secret file struct
 type MainConfig struct {
 	Server struct {
-		BaseURL    string
-		PublicPort string
+		BaseURL   string
+		AuthPort  string
+		FetchPort string
 	}
 
 	Cors struct {

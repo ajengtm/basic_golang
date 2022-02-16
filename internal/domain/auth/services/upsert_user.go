@@ -32,7 +32,6 @@ func (s *authDomain) UpsertUser(ctx context.Context, inputUser *UserRequest) (us
 		return user, nil
 	}
 
-	// tidak ketemu insert user baru ke db
 	user.Phone = inputUser.Phone
 	user.Role = inputUser.Role
 	user.Username = inputUser.Username

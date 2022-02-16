@@ -19,7 +19,8 @@ func main() {
 	zaplogger.Init()
 
 	// Add Command
-	rootCmd.AddCommand(http.PublicCmd)
+	rootCmd.AddCommand(http.AuthCmd)
+	rootCmd.AddCommand(http.FetchCmd)
 
 	if err := rootCmd.Execute(); err != nil {
 		log.Fatal(err)

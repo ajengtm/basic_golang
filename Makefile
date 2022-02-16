@@ -15,8 +15,14 @@ build:
 	GOPRIVATE=gitlab.warungpintar.co go build -ldflags="-s -w" -o bin/${PROJECTNAME} main.go; 
 	@echo "Process took $$(($$(date +%s)-$(STIME))) seconds"
 
-## start-public-http: start without docker
-start-public-http: build
+## start-auth-http: start without docker
+start-http-auth: build
 	@echo "  >  Starting Program..."
-	go run main.go http-public
+	go run main.go http-auth
+	@echo "Process took $$(($$(date +%s)-$(STIME))) seconds"
+
+## start-auth-http: start without docker
+start-http-fetch: build
+	@echo "  >  Starting Program..."
+	go run main.go http-fetch
 	@echo "Process took $$(($$(date +%s)-$(STIME))) seconds"
