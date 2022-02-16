@@ -4,6 +4,7 @@ import (
 	"basic_golang/internal/domain/auth/entity"
 	"basic_golang/internal/domain/auth/services"
 	"context"
+	"database/sql"
 
 	"basic_golang/internal/domain/auth/repository"
 )
@@ -14,8 +15,8 @@ type AuthDomainInterface interface {
 	UpsertUser(ctx context.Context, inputUser *services.UserRequest) (user entity.User, err error)
 }
 
-func NewAuthDomain() AuthDomainInterface {
-	authRepo := repository.NewAuthRepository()
+func NewAuthDomain(database *sql.DB) AuthDomainInterface {
+	authRepo := repository.NewAuthRepository(database)
 	authServices := services.NewAuthServices(authRepo)
 	return authServices
 }

@@ -2,13 +2,12 @@ package public
 
 import (
 	"context"
+	"database/sql"
 	"fmt"
 	"net/http"
 	"os"
 	"os/signal"
 	"time"
-
-	gormio "gorm.io/gorm"
 
 	"basic_golang/config"
 
@@ -29,10 +28,9 @@ type Server struct {
 
 func NewServer(
 	cfg config.MainConfig,
-	gormioMasterClient *gormio.DB,
-	gormioSlaveClient *gormio.DB,
+	database *sql.DB,
 ) *Server {
-	authDomain := auth.NewAuthDomain()
+	authDomain := auth.NewAuthDomain(database)
 
 	return &Server{
 		Cfg:        cfg,

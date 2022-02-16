@@ -16,16 +16,6 @@ type MainConfig struct {
 		PublicPort string
 	}
 
-	DBConfig struct {
-		SlaveDSN      string
-		MasterDSN     string
-		RetryInterval int
-		MaxIdleConn   int
-		MaxConn       int
-		MasterOnly    bool
-		DebugMode     bool
-	}
-
 	Cors struct {
 		AllowedOrigins     []string
 		AllowedHeaders     []string

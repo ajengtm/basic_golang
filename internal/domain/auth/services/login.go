@@ -1,7 +1,6 @@
 package services
 
 import (
-	"basic_golang/internal/adapter"
 	"context"
 	"fmt"
 
@@ -38,17 +37,22 @@ func (s *authDomain) Login(ctx context.Context, inputLogin *LoginRequest) (jwtTo
 
 	logger := zaplogger.For(ctx)
 
-	expectedPassword, ok := users[inputLogin.Phone]
-	if !ok || expectedPassword != inputLogin.Password {
-		logger.Error("error when Login password not match", zap.Error(err))
+	user, err := s.authRepository.Find(ctx, "phone", inputLogin.Phone)
+	if err != nil {
+		logger.Error("error when Login|FindByPhoneNumber", zap.Error(err))
+		return jwtToken, err
+	}
+
+	if user.Password != inputLogin.Password {
+		logger.Error("error when Login, password not match", zap.Error(err))
 		return jwtToken, fmt.Errorf("Not Authorized")
 	}
 
 	claims := &Claims{
-		Username:  "lala",
-		Phone:     expectedPassword,
-		Role:      "admin",
-		Timestamp: adapter.GetCurrentTimestampTZ(),
+		Username:  user.Username,
+		Phone:     user.Phone,
+		Role:      user.Role,
+		Timestamp: user.Timestamp,
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)

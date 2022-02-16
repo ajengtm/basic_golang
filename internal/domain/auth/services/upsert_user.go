@@ -1,12 +1,15 @@
 package services
 
 import (
+	"basic_golang/internal/adapter"
+	zaplogger "basic_golang/internal/adapter/zap"
 	"basic_golang/internal/domain/auth/entity"
 	"context"
 	"math/rand"
 	"time"
 
 	"github.com/opentracing/opentracing-go"
+	"go.uber.org/zap"
 )
 
 type UserRequest struct {
@@ -18,14 +21,28 @@ type UserRequest struct {
 func (s *authDomain) UpsertUser(ctx context.Context, inputUser *UserRequest) (user entity.User, err error) {
 	span, ctx := opentracing.StartSpanFromContext(ctx, "services_UpsertUser")
 	defer span.Finish()
+	logger := zaplogger.For(ctx)
 
-	// Find by username, Ketemu return user
+	user, err = s.authRepository.Find(ctx, "username", inputUser.Username)
+	if err != nil {
+		logger.Error("error when UpsertUser|FindByUsername", zap.Error(err))
+		return user, err
+	}
+	if (entity.User{} != user) {
+		return user, nil
+	}
 
 	// tidak ketemu insert user baru ke db
 	user.Phone = inputUser.Phone
 	user.Role = inputUser.Role
 	user.Username = inputUser.Username
 	user.Password = generatePassword()
+	user.Timestamp = adapter.GetCurrentTimestampTZ()
+	user, err = s.authRepository.CreateUser(ctx, user)
+	if err != nil {
+		logger.Error("error when UpsertUser|FindByUsername", zap.Error(err))
+		return user, err
+	}
 
 	return user, nil
 }

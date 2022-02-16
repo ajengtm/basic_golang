@@ -15,9 +15,10 @@ var PublicCmd = &cobra.Command{
 	Short: "Starts Public REST API ",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		cfg := config.LoadMainConfig()
-		gormioMasterClient, gormioSlaveClient := adapter.NewMysqlAdapter(context.TODO(), cfg)
 
-		srv := public.NewServer(cfg, gormioMasterClient, gormioSlaveClient)
+		database, _ := adapter.NewSqliteAdapter(context.TODO())
+
+		srv := public.NewServer(cfg, database)
 		return srv.Run()
 	},
 }

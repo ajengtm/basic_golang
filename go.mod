@@ -16,6 +16,7 @@ require (
 	github.com/grpc-ecosystem/go-grpc-prometheus v1.2.0 // indirect
 	github.com/jinzhu/gorm v1.9.16 // indirect
 	github.com/jonboulle/clockwork v0.1.0 // indirect
+	github.com/mattn/go-sqlite3 v1.14.11 // indirect
 	github.com/opentracing/opentracing-go v1.2.0 // indirect
 	github.com/prometheus/tsdb v0.7.1 // indirect
 	github.com/rs/cors v1.8.2 // indirect
