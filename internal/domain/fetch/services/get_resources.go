@@ -88,16 +88,46 @@ func (s *fetchDomain) GetResourcesAdmin(ctx context.Context, jwtToken string) (r
 		return res, fmt.Errorf("Not Authorized - Invalid User Role")
 	}
 
+	count, err := s.fetchRepository.CountResource(ctx)
+	if err != nil {
+		logger.Error("error when GetResources|CountResource", zap.Error(err))
+		return res, err
+	}
+
+	var resources []entity.Resource
+	if count == 0 {
+		resources, err = s.SeedDataResources(ctx)
+		if err != nil {
+			logger.Error("error when GetResources|seedDataResources", zap.Error(err))
+			return res, err
+		}
+	}
+	fmt.Println(resources)
+
+	return res, nil
+}
+
+func (s *fetchDomain) SeedDataResources(ctx context.Context) (res []entity.Resource, err error) {
+	span, ctx := opentracing.StartSpanFromContext(ctx, "services_Fetch_seedDataResources")
+	defer span.Finish()
+	logger := zaplogger.For(ctx)
+
 	resources, err := s.fetchRepository.GetResources(ctx)
 	if err != nil {
 		logger.Error("error when GetResources|GetResources", zap.Error(err))
 		return res, err
 	}
-
+	var newResources []entity.Resource
 	for _, resource := range resources {
 		if (resource != entity.Resource{}) {
-			res = append(res, resource)
+			newResources = append(newResources, resource)
 		}
+	}
+
+	err = s.fetchRepository.InsertResources(ctx, newResources)
+	if err != nil {
+		logger.Error("error when GetResources|GetResources", zap.Error(err))
+		return res, err
 	}
 
 	return res, nil

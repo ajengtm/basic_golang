@@ -8,15 +8,17 @@ import (
 	"basic_golang/internal/domain/fetch/repository"
 	"basic_golang/internal/domain/fetch/services"
 	"context"
+	"database/sql"
 )
 
 type FetchDomainInterface interface {
 	GetResourcesAdmin(ctx context.Context, jwtToken string) ([]entity.Resource, error)
 	GetResources(ctx context.Context, jwtToken string) ([]entity.ResourceResponse, error)
+	SeedDataResources(ctx context.Context) (res []entity.Resource, err error)
 }
 
-func NewFetchDomain(cfg config.MainConfig, myCache adapter.CacheItf, authDomain auth.AuthDomainInterface) FetchDomainInterface {
-	fetchRepo := repository.NewFetchRepository(cfg, myCache)
+func NewFetchDomain(cfg config.MainConfig, database *sql.DB, myCache adapter.CacheItf, authDomain auth.AuthDomainInterface) FetchDomainInterface {
+	fetchRepo := repository.NewFetchRepository(cfg, database, myCache)
 	fetchServices := services.NewFetchServices(authDomain, fetchRepo)
 	return fetchServices
 }

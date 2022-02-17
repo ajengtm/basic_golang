@@ -34,7 +34,7 @@ func NewServer(
 	myCache adapter.CacheItf,
 ) *Server {
 	authDomain := auth.NewAuthDomain(database)
-	fetchDomain := fetch.NewFetchDomain(cfg, myCache, authDomain)
+	fetchDomain := fetch.NewFetchDomain(cfg, database, myCache, authDomain)
 
 	return &Server{
 		Cfg:         cfg,
