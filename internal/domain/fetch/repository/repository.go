@@ -2,6 +2,7 @@ package repository
 
 import (
 	"basic_golang/config"
+	"basic_golang/internal/adapter"
 	"basic_golang/internal/domain/fetch/entity"
 	"context"
 
@@ -9,7 +10,8 @@ import (
 )
 
 type fetchRepository struct {
-	cfg config.MainConfig
+	cfg     config.MainConfig
+	myCache adapter.CacheItf
 }
 
 type FetchRepositoryInterface interface {
@@ -17,9 +19,10 @@ type FetchRepositoryInterface interface {
 	GetCurrencyIDRtoUSD(ctx context.Context) (entity.UsdIdrCurrency, error)
 }
 
-func NewFetchRepository(cfg config.MainConfig) FetchRepositoryInterface {
+func NewFetchRepository(cfg config.MainConfig, myCache adapter.CacheItf) FetchRepositoryInterface {
 	fetchRepo := &fetchRepository{
-		cfg: cfg,
+		cfg:     cfg,
+		myCache: myCache,
 	}
 	return fetchRepo
 }

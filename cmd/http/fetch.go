@@ -15,10 +15,10 @@ var FetchCmd = &cobra.Command{
 	Short: "Starts FETCH REST API ",
 	RunE: func(cmd *cobra.Command, args []string) error {
 		cfg := config.LoadMainConfig()
-
+		myCache := adapter.InitCache()
 		database, _ := adapter.NewSqliteAdapter(context.TODO())
 
-		srv := public_fetch.NewServer(cfg, database)
+		srv := public_fetch.NewServer(cfg, database, myCache)
 		return srv.Run()
 	},
 }

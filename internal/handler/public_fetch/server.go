@@ -10,7 +10,7 @@ import (
 	"time"
 
 	"basic_golang/config"
-
+	"basic_golang/internal/adapter"
 	zaplogger "basic_golang/internal/adapter/zap"
 	"basic_golang/internal/domain/auth"
 	"basic_golang/internal/domain/fetch"
@@ -31,9 +31,10 @@ type Server struct {
 func NewServer(
 	cfg config.MainConfig,
 	database *sql.DB,
+	myCache adapter.CacheItf,
 ) *Server {
 	authDomain := auth.NewAuthDomain(database)
-	fetchDomain := fetch.NewFetchDomain(cfg, authDomain)
+	fetchDomain := fetch.NewFetchDomain(cfg, myCache, authDomain)
 
 	return &Server{
 		Cfg:         cfg,

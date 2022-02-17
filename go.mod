@@ -18,6 +18,7 @@ require (
 	github.com/jonboulle/clockwork v0.1.0 // indirect
 	github.com/mattn/go-sqlite3 v1.14.11 // indirect
 	github.com/opentracing/opentracing-go v1.2.0 // indirect
+	github.com/patrickmn/go-cache v2.1.0+incompatible // indirect
 	github.com/prometheus/tsdb v0.7.1 // indirect
 	github.com/rs/cors v1.8.2 // indirect
 	github.com/shurcooL/sanitized_anchor_name v1.0.0 // indirect
