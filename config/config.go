@@ -25,6 +25,15 @@ type MainConfig struct {
 		MaxAge             int
 		OptionsPassthrough bool
 	}
+
+	CurrencyConverter struct {
+		APIkey string
+		URL    string
+	}
+
+	Efishery struct {
+		URL string
+	}
 }
 
 // Environment List

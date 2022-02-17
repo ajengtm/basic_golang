@@ -33,7 +33,7 @@ func NewServer(
 	database *sql.DB,
 ) *Server {
 	authDomain := auth.NewAuthDomain(database)
-	fetchDomain := fetch.NewFetchDomain(authDomain)
+	fetchDomain := fetch.NewFetchDomain(cfg, authDomain)
 
 	return &Server{
 		Cfg:         cfg,
