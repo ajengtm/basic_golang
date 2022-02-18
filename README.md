@@ -20,8 +20,6 @@ There are 2 ways to run the app :
 or
 `make start-http-auth`
 
-* Build and Run container using Docker
-
 ## Fetch-App
 `fetch-app` will fetch and process resources
 
@@ -31,5 +29,3 @@ There are 2 ways to run the app :
 `go run main.go http-fetch`
 or
 `make start-http-auth`
-
-* Build and Run container using Docker

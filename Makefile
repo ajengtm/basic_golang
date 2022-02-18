@@ -9,10 +9,10 @@ STIME := $(shell date +%s)
 ## install: Install missing dependencies. Runs `go get` internally. e.g; make install get=github.com/foo/bar
 install: go-get
 
-## build-public-http: start without docker
+## build-http: start without docker
 build:
 	@echo "  >  Building Program..."
-	GOPRIVATE=gitlab.warungpintar.co go build -ldflags="-s -w" -o bin/${PROJECTNAME} main.go; 
+	go build -ldflags="-s -w" -o bin/${PROJECTNAME} main.go; 
 	@echo "Process took $$(($$(date +%s)-$(STIME))) seconds"
 
 ## start-auth-http: start without docker
