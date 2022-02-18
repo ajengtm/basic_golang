@@ -41,15 +41,15 @@ func (r *fetchRepository) GetResources(ctx context.Context) (resources []entity.
 
 	logger.Info(
 		"REPO||FETCH||GetResources||Response from stein.efishery.com",
-		zap.String("responseBody", string(respBody)),
-		zap.Int("statusCode", resp.StatusCode),
+		// zap.String("responseBody", string(respBody)),
+		// zap.Int("statusCode", resp.StatusCode),
 	)
 
 	if resp.StatusCode != http.StatusOK {
 		logger.Error(
 			"REPO||FETCH||GetResources||error response from stein.efishery.com",
-			zap.Int("StatusCode", resp.StatusCode),
-			zap.String("RespBody", string(respBody)),
+			// zap.Int("StatusCode", resp.StatusCode),
+			// zap.String("RespBody", string(respBody)),
 		)
 		return resources, errors.New(string(respBody))
 	}

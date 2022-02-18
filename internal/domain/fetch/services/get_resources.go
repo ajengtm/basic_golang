@@ -67,7 +67,7 @@ func (s *fetchDomain) GetResources(ctx context.Context, jwtToken string) (res []
 	return res, nil
 }
 
-func (s *fetchDomain) GetResourcesAdmin(ctx context.Context, jwtToken string) (res []entity.Resource, err error) {
+func (s *fetchDomain) GetResourcesAdmin(ctx context.Context, jwtToken string) (res entity.ResourceAgregationResponse, err error) {
 	span, ctx := opentracing.StartSpanFromContext(ctx, "services_Fetch_GetResources")
 	defer span.Finish()
 
@@ -94,15 +94,30 @@ func (s *fetchDomain) GetResourcesAdmin(ctx context.Context, jwtToken string) (r
 		return res, err
 	}
 
-	var resources []entity.Resource
 	if count == 0 {
-		resources, err = s.SeedDataResources(ctx)
+		_, err = s.SeedDataResources(ctx)
 		if err != nil {
 			logger.Error("error when GetResources|seedDataResources", zap.Error(err))
 			return res, err
 		}
 	}
-	fmt.Println(resources)
+
+	sqlFunction := []string{"MIN", "MAX", "AVG"}
+	for _, v := range sqlFunction {
+		aggregateResources, err := s.fetchRepository.GetResourcesAgregation(ctx, v)
+		if err != nil {
+			logger.Error("error when GetResources|GetResourcesAgregation", zap.Error(err))
+			return res, err
+		}
+		switch v {
+		case "MIN":
+			res.Min = aggregateResources
+		case "MAX":
+			res.Max = aggregateResources
+		case "AVG":
+			res.Avg = aggregateResources
+		}
+	}
 
 	return res, nil
 }
@@ -119,7 +134,7 @@ func (s *fetchDomain) SeedDataResources(ctx context.Context) (res []entity.Resou
 	}
 	var newResources []entity.Resource
 	for _, resource := range resources {
-		if (resource != entity.Resource{}) {
+		if (resource != entity.Resource{}) || resource.UUID != "" {
 			newResources = append(newResources, resource)
 		}
 	}
@@ -130,5 +145,5 @@ func (s *fetchDomain) SeedDataResources(ctx context.Context) (res []entity.Resou
 		return res, err
 	}
 
-	return res, nil
+	return newResources, nil
 }

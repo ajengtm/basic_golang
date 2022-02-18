@@ -22,3 +22,15 @@ type ResourceResponse struct {
 	ParsedDate   string  `json:"tgl_parsed"`
 	Timestamp    string  `json:"timestamp"`
 }
+
+type ResourceAgregationResponse struct {
+	Min    []AggregateResources `json:"min"`
+	Max    []AggregateResources `json:"max"`
+	Median []AggregateResources `json:"median"`
+	Avg    []AggregateResources `json:"avg"`
+}
+
+type AggregateResources struct {
+	AreaProvinsi string `json:"area_provinsi"`
+	WeekBegining string `json:"week_begining"`
+}

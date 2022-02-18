@@ -16,7 +16,7 @@ func (r *fetchRepository) InsertResources(ctx context.Context, resources []entit
 
 	logger := zaplogger.For(ctx)
 
-	sqlStr := "INSERT INTO resource(uuid, komoditas, area_provinsi, area_kota, size, price, tgl_parsed, timestamp) VALUES "
+	sqlStr := `INSERT INTO resource (uuid, komoditas, area_provinsi, area_kota, size, price, tgl_parsed, timestamp) VALUES `
 
 	vals := []interface{}{}
 	for _, resource := range resources {
@@ -31,20 +31,14 @@ func (r *fetchRepository) InsertResources(ctx context.Context, resources []entit
 			resource.ParsedDate,
 			resource.Timestamp,
 		)
+
 	}
 	sqlStr = strings.TrimSuffix(sqlStr, ",")
 
-	stmt, err := r.database.Prepare(sqlStr)
+	_, err = r.database.Exec(sqlStr, vals...)
 	if err != nil {
 		logger.Error("Database error", zap.Error(err))
 		return err
 	}
-
-	_, err = stmt.Exec(vals...)
-	if err != nil {
-		logger.Error("Database error", zap.Error(err))
-		return err
-	}
-
 	return nil
 }

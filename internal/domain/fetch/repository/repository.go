@@ -17,9 +17,16 @@ type fetchRepository struct {
 }
 
 type FetchRepositoryInterface interface {
+	// related to stein.efishery.com
+	GetResources(ctx context.Context) (resources []entity.Resource, err error)
+
+	// related to db
 	InsertResources(ctx context.Context, resources []entity.Resource) (err error)
 	CountResource(ctx context.Context) (count int, err error)
-	GetResources(ctx context.Context) (resources []entity.Resource, err error)
+	FindResources(ctx context.Context) (resources []entity.Resource, err error)
+	GetResourcesAgregation(ctx context.Context, functions string) (resources []entity.AggregateResources, err error)
+
+	// related to free.currencyconverterapi.com
 	GetCurrencyIDRtoUSD(ctx context.Context) (entity.UsdIdrCurrency, error)
 	GetCurrencyFromCache(ctx context.Context) (currency float64)
 	GetCurrencyFromCurrconv(ctx context.Context) (currency entity.UsdIdrCurrency, err error)

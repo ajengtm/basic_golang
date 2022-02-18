@@ -12,7 +12,7 @@ import (
 )
 
 type FetchDomainInterface interface {
-	GetResourcesAdmin(ctx context.Context, jwtToken string) ([]entity.Resource, error)
+	GetResourcesAdmin(ctx context.Context, jwtToken string) (res entity.ResourceAgregationResponse, err error)
 	GetResources(ctx context.Context, jwtToken string) ([]entity.ResourceResponse, error)
 	SeedDataResources(ctx context.Context) (res []entity.Resource, err error)
 }
