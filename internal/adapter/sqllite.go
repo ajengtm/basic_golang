@@ -33,20 +33,5 @@ func NewSqliteAdapter(ctx context.Context) (database *sql.DB, err error) {
 		return database, err
 	}
 
-	statement2, err := database.Prepare(`
-	CREATE TABLE IF NOT EXISTS resource 
-	(uuid TEXT PRIMARY KEY, 
-		komoditas TEXT, 
-		area_provinsi TEXT,
-		area_kota TEXT,
-		size TEXT,
-		price TEXT,
-		tgl_parsed TEXT,
-		timestamp TEXT)`)
-	statement2.Exec()
-	if err != nil {
-		return database, err
-	}
-
 	return database, nil
 }
