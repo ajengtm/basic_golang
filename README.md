@@ -5,7 +5,7 @@ Auth-App and Fetch-App
 * `BASEURL`to define the consistent part of your web address
 * `SERVER_PORT` to define which port that the application will listen to 
 	* The default port is Auth-App `8089`
-    * The default port is Auth-App `8090`
+    * The default port is Fetch-App `8090`
 * `CORS` to define enables controlled access to resources located outside system.
 * `CurrencyConverter` to define fetch CurrencyConverter URL & APIkey
 * `Efishery` to define fetch resources URL
