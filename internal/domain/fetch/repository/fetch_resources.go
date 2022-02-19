@@ -58,7 +58,6 @@ func (r *fetchRepository) GetResources(ctx context.Context) (resources []entity.
 		logger.Error("REPO||FETCH||GetResources||error when try to decode response body from stein.efishery.com", zap.Error(err))
 		return resources, err
 	}
-
 	logger.Info("REPO||FETCH||GetResources||Success")
 	return
 }

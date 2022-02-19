@@ -47,7 +47,7 @@ Auth-App has 4 endpoints that can be accessed.
     "meta": {}
 }
 ```
-* GET `/v1/auth/login`
+* POST `/v1/auth/login`
 -- This endpoint will generate JWT using `Private Claims` that contains `name`, `phone`, `role`, and `timestamp` of the user that has the correct/matching `phone` and `password`.
 ```
 //HTTP Request Body (JSON)

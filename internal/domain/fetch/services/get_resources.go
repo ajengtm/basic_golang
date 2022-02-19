@@ -62,7 +62,7 @@ func (s *fetchDomain) GetResources(ctx context.Context, jwtToken string) (res []
 			res = append(res, entity.Resource{
 				UUID:         resource.UUID,
 				Komoditas:    resource.Komoditas,
-				AreaProvinsi: resource.Komoditas,
+				AreaProvinsi: resource.AreaProvinsi,
 				AreaKota:     resource.AreaKota,
 				Size:         resource.Size,
 				Price:        resource.Price,
