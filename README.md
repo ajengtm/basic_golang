@@ -130,7 +130,7 @@ token: <JWT>
     {
       "uuid": "6eaa323d-22ca-4a64-8c38-5ba209f21b5d",
       "komoditas": "Ikan Tongkol",
-      "area_provinsi": "Ikan Tongkol",
+      "area_provinsi": "JAWA TIMUR",
       "area_kota": "SITUBONDO",
       "size": "100",
       "price": "60000",
@@ -141,7 +141,7 @@ token: <JWT>
     {
       "uuid": "3f74bc97-a4f4-424c-b053-d9d689323546",
       "komoditas": "Test",
-      "area_provinsi": "Test",
+      "area_provinsi": "SUMATERA BARAT",
       "area_kota": "PADANG PARIAMAN",
       "size": "40",
       "price": "1",
